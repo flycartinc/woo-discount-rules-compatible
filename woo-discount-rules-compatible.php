@@ -16,5 +16,6 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
  * Check if Woo Discount rule is enabled is active
  **/
 if ( in_array( 'woo-discount-rules/woo-discount-rules.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+    include_once(dirname(__FILE__) . '/vendor/autoload.php');
     include_once(dirname(__FILE__) . '/loader.php');
 }
