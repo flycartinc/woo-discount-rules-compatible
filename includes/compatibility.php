@@ -23,7 +23,13 @@ if (!class_exists('FWDRCIncludesCompatibility')) {
             //Wocommerce multi currency
             $compatible_wmc_villatheme = FWDRCIncludesAdmin::getConfigData('compatible_wmc_villatheme', 0);
             if ($compatible_wmc_villatheme == "1") {
-                add_filter('woo_discount_rules_before_apply_discount', 'FWDRCIncludesCompatibility::compatible_with_woocommerce_multi_currency_villatheme', 10, 3);
+                add_filter('woo_discount_rules_before_apply_discount', function ($price, $product, $cart){
+                    return FWDRCIncludesCompatibility::compatible_with_woocommerce_multi_currency_villatheme($price);
+                }, 10, 3);
+
+                add_filter('woo_discount_rules_before_calculate_discount_from_subtotal_in_cart', function ($subtotal, $discount_type, $rule){
+                    return FWDRCIncludesCompatibility::compatible_with_woocommerce_multi_currency_villatheme($subtotal, true, $discount_type);
+                }, 10, 3);
             }
 
             //WooCommerce Wholesale Prices - Rymera Web Co
@@ -146,31 +152,40 @@ if (!class_exists('FWDRCIncludesCompatibility')) {
         /**
          * To make compatible with woocommerce multi currency - villatheme
          * */
-        public static function compatible_with_woocommerce_multi_currency_villatheme($price, $product, $cart){
+        public static function compatible_with_woocommerce_multi_currency_villatheme($price, $is_cart = false, $discount_type = 'percentage_discount'){
             $path = WP_PLUGIN_DIR.'/woo-multi-currency/includes/data.php';
             if(file_exists($path)) require_once $path;
 
             $path = WP_PLUGIN_DIR.'/woocommerce-currency-switcher/includes/data.php';
             if(file_exists($path)) require_once $path;
 
-            $class_exists = false;
-            if(class_exists('WOOMULTI_CURRENCY_F_Data')){
-                $setting         = new WOOMULTI_CURRENCY_F_Data();
-                $class_exists = true;
-            } elseif(class_exists('WOOMULTI_CURRENCY_Data')){
-                $setting         = new WOOMULTI_CURRENCY_Data();
-                $class_exists = true;
-            }
-            if($class_exists === true){
-                $selected_currencies = $setting->get_list_currencies();
-                $current_currency    = $setting->get_current_currency();
-                if ( ! $current_currency ) {
-                    return $price;
-                }
-                if ( $price ) {
-                    $price = $price / $selected_currencies[ $current_currency ]['rate'];
+            $process_conversion = true;
+            if($is_cart === true){
+                if($discount_type !== 'percentage_discount'){
+                    $process_conversion = false;
                 }
             }
+            if($process_conversion){
+                $class_exists = false;
+                if(class_exists('WOOMULTI_CURRENCY_F_Data')){
+                    $setting         = new WOOMULTI_CURRENCY_F_Data();
+                    $class_exists = true;
+                } elseif(class_exists('WOOMULTI_CURRENCY_Data')){
+                    $setting         = new WOOMULTI_CURRENCY_Data();
+                    $class_exists = true;
+                }
+                if($class_exists === true){
+                    $selected_currencies = $setting->get_list_currencies();
+                    $current_currency    = $setting->get_current_currency();
+                    if ( ! $current_currency ) {
+                        return $price;
+                    }
+                    if ( $price ) {
+                        $price = $price / $selected_currencies[ $current_currency ]['rate'];
+                    }
+                }
+            }
+
             return $price;
         }
 
