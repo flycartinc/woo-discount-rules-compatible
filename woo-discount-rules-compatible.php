@@ -5,7 +5,7 @@
  * Description: To make compatible with Discount Rules for WooCommerce.
  * Author: Flycart Technologies LLP
  * Author URI: https://www.flycart.org
- * Version: 1.0.0
+ * Version: 1.0.1
  * Text Domain: woo-discount-rules-compatible
  * Domain Path: /i18n/languages/
  * Requires at least: 4.6.1
