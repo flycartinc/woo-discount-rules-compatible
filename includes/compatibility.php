@@ -18,6 +18,10 @@ if (!class_exists('FWDRCIncludesCompatibility')) {
             $compatible_wcs_realmag = FWDRCIncludesAdmin::getConfigData('compatible_wcs_realmag777', 0);
             if ($compatible_wcs_realmag == "1") {
                 add_filter('woocs_fixed_raw_woocommerce_price', 'FWDRCIncludesCompatibility::compatible_with_currency_switcher_realmag777', 10, 3);
+                $compatible_wcs_realmag_strict_based_on_currency = FWDRCIncludesAdmin::getConfigData('compatible_wcs_realmag777_strict_based_on_currency', 0);
+                if ($compatible_wcs_realmag_strict_based_on_currency == "1") {
+                    add_filter('woo_discount_rules_woocs_convert_price_based_on_currency', '__return_true');
+                }
             }
 
             //Wocommerce multi currency

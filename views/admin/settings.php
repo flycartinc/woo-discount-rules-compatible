@@ -30,6 +30,15 @@ $has_compatibility_plugin = false;
                                         <?php esc_html_e('Add compatible for WooCommerce Currency Switcher', 'woo-discount-rules-compatible'); ?>
                                     </label>
                                 </div>
+                                <?php
+                                $data['compatible_wcs_realmag777_strict_based_on_currency'] = (isset($data['compatible_wcs_realmag777_strict_based_on_currency']) ? $data['compatible_wcs_realmag777_strict_based_on_currency'] : 0);
+                                ?>
+                                <div class="col-md-12">
+                                    <label>
+                                        <input type="checkbox" name="wdrc[compatible_wcs_realmag777_strict_based_on_currency]" id="compatible_wcs_realmag777_strict_based_on_currency" value="1" <?php if ($data['compatible_wcs_realmag777_strict_based_on_currency'] == 1) { ?> checked <?php } ?>>
+                                        <?php _e('WooCommerce Currency Switcher - (<b>Additionally use this, only when the above doesn\'t work</b>)', 'woo-discount-rules-compatible'); ?>
+                                    </label>
+                                </div>
                             </div>
                             <?php
                         }
