@@ -1,7 +1,7 @@
 <?php
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 ?>
-<h2><?php esc_html_e('Woo Discount Rules - Compatible', 'woo-discount-rules-compatible-compatible'); ?></h2>
+<h2><?php esc_html_e('Compatibility Plugin for Woo Discount Rules', 'woo-discount-rules-compatible-compatible'); ?></h2>
 <?php
 
 if (is_string($data)) $data = json_decode($data, true);
@@ -160,6 +160,22 @@ $has_compatibility_plugin = false;
                                     <label>
                                         <input type="checkbox" name="wdrc[compatible_woocommerce_composite_product]" id="compatible_woocommerce_composite_product" value="1" <?php if ($data['compatible_woocommerce_composite_product'] == 1) { ?> checked <?php } ?>>
                                         <?php esc_html_e('Add compatible for WooCommerce Composite Products', 'woo-discount-rules-compatible'); ?>
+                                    </label>
+                                </div>
+                            </div>
+                            <?php
+                        }
+
+                        //Compatible with YITH WooCommerce Role Based Prices Premium by YITHEMES
+                        $data['compatible_woocommerce_role_based_by_yithemes'] = (isset($data['compatible_woocommerce_role_based_by_yithemes']) ? $data['compatible_woocommerce_role_based_by_yithemes'] : 0);
+                        if ( is_plugin_active( 'yith-woocommerce-role-based-prices-premium/init.php' ) || ($data['compatible_woocommerce_composite_product'] == 1)) {
+                            $has_compatibility_plugin = true;
+                            ?>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label>
+                                        <input type="checkbox" name="wdrc[compatible_woocommerce_role_based_by_yithemes]" id="compatible_woocommerce_role_based_by_yithemes" value="1" <?php if ($data['compatible_woocommerce_role_based_by_yithemes'] == 1) { ?> checked <?php } ?>>
+                                        <?php esc_html_e('Add compatible for YITH WooCommerce Role Based Prices Premium', 'woo-discount-rules-compatible'); ?>
                                     </label>
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin name: Woo Discount Rules Compatible
+ * Plugin name: Compatibility Plugin for Woo Discount Rules
  * Plugin URI: http://www.flycart.org
  * Description: To make compatible with Discount Rules for WooCommerce.
  * Author: Flycart Technologies LLP

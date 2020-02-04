@@ -91,6 +91,19 @@ if (!class_exists('FWDRCIncludesCompatibility')) {
                 add_filter('woo_discount_rules_exclude_cart_item_from_discount', 'FWDRCIncludesCompatibility::compatible_with_woocommerce_composite_product', 10, 2);
             }
 
+            //Compatible with YITH WooCommerce Role Based Prices Premium by YITHEMES
+            $compatible_woocommerce_role_based_by_yithemes = FWDRCIncludesAdmin::getConfigData('compatible_woocommerce_role_based_by_yithemes', 0);
+            if ($compatible_woocommerce_role_based_by_yithemes == "1") {
+                add_filter('yith_wcrbp_get_role_based_price', 'FWDRCIncludesCompatibility::compatible_with_woocommerce_role_based_by_yithemes', 10, 2);
+
+                add_action('woocommerce_before_calculate_totals', function (){
+                    remove_filter('yith_wcrbp_get_role_based_price', 'FWDRCIncludesCompatibility::compatible_with_woocommerce_role_based_by_yithemes', 10, 2);
+                }, 999);
+                add_action('woocommerce_before_calculate_totals', function (){
+                    add_filter('yith_wcrbp_get_role_based_price', 'FWDRCIncludesCompatibility::compatible_with_woocommerce_role_based_by_yithemes', 10, 2);
+                }, 1001);
+            }
+
             add_action('deactivated_plugin', 'FWDRCIncludesCompatibility::detect_plugin_deactivation', 10, 2);
         }
 
@@ -117,6 +130,8 @@ if (!class_exists('FWDRCIncludesCompatibility')) {
                 self::disable_an_option('compatible_extra_product_option_theme_high');
             } elseif ($plugin == "woocommerce-composite-products/woocommerce-composite-products.php") {
                 self::disable_an_option('compatible_woocommerce_composite_product');
+            } elseif ($plugin == "yith-woocommerce-role-based-prices-premium/init.php") {
+                self::disable_an_option('compatible_woocommerce_role_based_by_yithemes');
             }
         }
 
@@ -313,6 +328,22 @@ if (!class_exists('FWDRCIncludesCompatibility')) {
             }
 
             return false;
+        }
+
+        /**
+         * To make Compatible with YITH WooCommerce Role Based Prices Premium by YITHEMES
+         * */
+        public static function compatible_with_woocommerce_role_based_by_yithemes($return, $_product){
+            remove_filter('yith_wcrbp_get_role_based_price', 'FWDRCIncludesCompatibility::compatible_with_woocommerce_role_based_by_yithemes', 10, 2);
+            global $flycart_woo_discount_rules;
+            if(!empty($flycart_woo_discount_rules)){
+                $discountPrice = $flycart_woo_discount_rules->pricingRules->getDiscountPriceOfProduct($_product);
+                if($discountPrice !== null){
+                    $return = $discountPrice;
+                }
+            }
+            add_filter('yith_wcrbp_get_role_based_price', 'FWDRCIncludesCompatibility::compatible_with_woocommerce_role_based_by_yithemes', 10, 2);
+            return $return;
         }
 
         /**

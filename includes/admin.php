@@ -19,8 +19,8 @@ if(!class_exists('FWDRCIncludesAdmin')) {
             if (isset($submenu['woocommerce'])) {
                 add_submenu_page(
                     'woocommerce',
-                    'Woo Discount Rules Compatible',
-                    'Woo Discount Rules Compatible',
+                    'Compatibility for Woo Discount Rules',
+                    'Compatibility for Woo Discount Rules',
                     'edit_posts',
                     'woo_discount_rules_compatible',
                     'FWDRCIncludesAdmin::viewSettingPage'
