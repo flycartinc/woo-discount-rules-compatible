@@ -3,9 +3,9 @@ Contributors: flycart
 Tags: woocommerce, woocommerce discount rules, woo-discount-rules
 Requires at least: 4.0
 Tested up to: 5.3
-WC tested up to: 3.8
+WC tested up to: 3.9
 Requires PHP: 5.6
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,3 +34,5 @@ To make compatible with Discount Rules for WooCommerce with other plugins.
 10) WC Role Based Price By Varun sridharan - https://wordpress.org/plugins/woocommerce-role-based-price/
 
 11) Extra Product Options (Product Addons) for WooCommerce By themehigh - https://wordpress.org/plugins/woo-extra-product-options/
+
+12) YITH WooCommerce Role Based Prices Premium by YITHEMES - https://yithemes.com/themes/plugins/yith-woocommerce-role-based-prices/
